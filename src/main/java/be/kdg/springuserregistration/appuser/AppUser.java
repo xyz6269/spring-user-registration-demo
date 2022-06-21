@@ -26,7 +26,8 @@ public class AppUser implements UserDetails {
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
     private Long id;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String name;
     private String email;
     private String password;
@@ -35,8 +36,10 @@ public class AppUser implements UserDetails {
     private Boolean isEnabled;
     private Boolean isLocked;
 
-    public AppUser(String username, String password, AppUserRole appUserRole) {
-        this.username = username;
+    public AppUser(String firstName,String lastName, String email,String password, AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
         this.isEnabled = true;
@@ -51,13 +54,21 @@ public class AppUser implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    public String getLastName() {
+        return lastName;
     }
 
     @Override

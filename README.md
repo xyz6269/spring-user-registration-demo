@@ -1,4 +1,4 @@
-# Registration & Login Backend (side-project)
+# Registration & Login Backend (side-project | WIP)
 
 
 This is a side-project that I undertook to build a registration & login backend. 

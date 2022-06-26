@@ -16,6 +16,14 @@ During this development adventure, I managed to implement these technologies int
 
 However, this is not a finished project, so for now i'm labeling it as a WIP-project, because I'll be using this demo-form application to extend the functionality of the backend.
 
+
+## Roadmap
+
+- [ ] Implement JWT-authentication as confirmation of registration
+- [ ] Optimize error-handling by implementing constants for error-messages
+- [ ] create an engine for templating emails
+
+
 ## Reference Documentation
 
 - [MailDev](https://github.com/maildev/maildev)

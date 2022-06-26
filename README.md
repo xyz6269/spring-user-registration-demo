@@ -1,4 +1,4 @@
-# Registration & Login Backend (side-project)
+# Registration & Login Backend (side-project | WIP)
 
 
 This is a side-project that I undertook to build a registration & login backend. 
@@ -11,8 +11,7 @@ During this development adventure, I managed to implement these technologies int
 - [x] Spring Boot  
 - [x] Spring Security
 - [x] Java Mail
-- [x] Email verification with expiry
-- [x] Spring Boot
+- [x] Email verification with expiry (using MailDev as the mailserver) --> [check it out](https://github.com/maildev/maildev)
 
 However, this is not a finished project, so for now i'm labeling it as a WIP-project, because I'll be using this demo-form application to extend the functionality of the backend.
 

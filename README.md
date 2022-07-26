@@ -20,7 +20,8 @@ However, this is not a finished project, so for now i'm labeling it as a WIP-pro
 
 - [ ] Implement JWT-authentication as confirmation of registration
 - [ ] Optimize error-handling by implementing constants for error-messages
-- [ ] create an engine for templating emails
+- [ ] create an engine for templating emails (using Velocity)
+- [ ] generating hashed unique identifier for each user (to prevent easy exploitation of the database)  
 
 
 ## Reference Documentation

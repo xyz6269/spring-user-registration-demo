@@ -1,5 +1,6 @@
 package be.kdg.springuserregistration.appuser;
 
+import be.kdg.springuserregistration.email.EmailSender;
 import be.kdg.springuserregistration.registration.EmailValidator;
 import be.kdg.springuserregistration.registration.RegistrationRequest;
 import be.kdg.springuserregistration.registration.token.ConfirmationTokenService;
@@ -12,9 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 class AppUserServiceTest {
@@ -28,6 +29,9 @@ class AppUserServiceTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Mock
     private ConfirmationTokenService confirmationTokenService;
+
+    @Mock
+    private  EmailSender emailSender;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -58,10 +62,23 @@ class AppUserServiceTest {
     }
 
     @Test
-    void signUpUser() {
+    void itShouldReturnAppUserWhenSignUpIsSuccessful() {
+        // Given
+        String firstName = "John";
+        String lastName = "Doe";
+        String email = "notreally@gmail.com";
+        String password = "test";
+        AppUser appUser = new AppUser(firstName, lastName, email, password, AppUserRole.USER);
+
+        // Reguest
+        RegistrationRequest request = new RegistrationRequest(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getPassword());
+        given(appUserRepository.findByEmail(request.getEmail())).willReturn(Optional.empty());
+
+        // Then
+        then(appUserService.signUpUser(appUser)).isNotNull();
+        // Finally
+        then(appUserRepository.findByEmail(request.getEmail())).isNotNull();
+
     }
 
-    @Test
-    void enableAppUser() {
-    }
 }

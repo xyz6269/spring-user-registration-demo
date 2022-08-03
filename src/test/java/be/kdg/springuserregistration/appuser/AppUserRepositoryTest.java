@@ -8,8 +8,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.repository.config.BootstrapMode;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.data.repository.config.BootstrapMode.*;
 
 @DataJpaTest(  properties = {
@@ -29,9 +32,31 @@ class AppUserRepositoryTest {
 
     @Test
     void findByEmail() {
+        // given
+        String email = "test@gmail.com";
+        AppUser appUser = new AppUser("John", "Doe", email, "test", AppUserRole.USER);
+        given(appUserRepository.findByEmail(email)).willReturn(Optional.of(appUser));
+        // when
+        Optional<AppUser> foundAppUser = appUserRepository.findByEmail(email);
+        // then
+        assertThat(foundAppUser).isPresent();
+
+        assertThat(foundAppUser.get().getEmail()).isEqualTo(email);
+
     }
 
     @Test
     void enableAppUser() {
+        // given
+        String email = "test@gmail.com";
+        AppUser appUser = new AppUser("John", "Doe", email, "test", AppUserRole.USER);
+        given(appUserRepository.save(appUser)).willReturn(appUser);
+        // when
+        AppUser savedAppUser = appUserRepository.save(appUser);
+        // then
+        assertThat(savedAppUser.getIsEnabled()).isTrue();
+
+
+
     }
 }

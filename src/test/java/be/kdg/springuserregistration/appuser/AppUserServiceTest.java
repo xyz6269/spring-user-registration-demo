@@ -82,14 +82,12 @@ class AppUserServiceTest {
                 appUser.getEmail(),
                 appUser.getPassword());
 
-
         // valid email
         given(emailValidator.test(request.getEmail())).willReturn(true);
 
         // When
         String token = appUserService.signUpUser(appUser);
-
-
+        assertThat(token).isNotNull().hasLineCount(1);
     }
 
 }

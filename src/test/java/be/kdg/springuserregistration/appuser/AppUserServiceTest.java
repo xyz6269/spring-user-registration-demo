@@ -3,6 +3,7 @@ package be.kdg.springuserregistration.appuser;
 import be.kdg.springuserregistration.email.EmailSender;
 import be.kdg.springuserregistration.registration.EmailValidator;
 import be.kdg.springuserregistration.registration.RegistrationRequest;
+import be.kdg.springuserregistration.registration.token.ConfirmationToken;
 import be.kdg.springuserregistration.registration.token.ConfirmationTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,7 @@ class AppUserServiceTest {
     void itShouldThrowWhenEmailIsAlreadyTaken() {
         String firstName = "John";
         String lastName = "Doe";
-        String email = "test@gmail.com";
+        String email = "notreally@gmail.com";
         String password = "test";
         AppUser appUser = new AppUser(firstName,
                 lastName,
@@ -87,13 +88,6 @@ class AppUserServiceTest {
 
         // When
         String token = appUserService.signUpUser(appUser);
-
-        // Then
-        then(token).isNotNull();
-        assertThat(token).isNotEmpty();
-        then(appUserRepository.findByEmail(request.getEmail())).isNotNull();
-        assertThat(token).isNotNull();
-
 
 
     }

@@ -40,7 +40,6 @@ class AppUserRepositoryTest {
         Optional<AppUser> foundAppUser = appUserRepository.findByEmail(email);
         // then
         assertThat(foundAppUser).isPresent();
-
         assertThat(foundAppUser.get().getEmail()).isEqualTo(email);
 
     }

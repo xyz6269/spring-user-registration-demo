@@ -30,8 +30,6 @@ class AppUserServiceTest {
     @Mock
     private ConfirmationTokenService confirmationTokenService;
 
-    @Mock
-    private  EmailSender emailSender;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -44,10 +42,17 @@ class AppUserServiceTest {
         String lastName = "Doe";
         String email = "test@gmail.com";
         String password = "test";
-        AppUser appUser = new AppUser(firstName, lastName, email, password, AppUserRole.USER);
+        AppUser appUser = new AppUser(firstName,
+                lastName,
+                email,
+                password,
+                AppUserRole.USER);
 
         // Reguest
-        RegistrationRequest request = new RegistrationRequest(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getPassword());
+        RegistrationRequest request = new RegistrationRequest(appUser.getFirstName(),
+                appUser.getLastName(),
+                appUser.getEmail(),
+                appUser.getPassword());
         given(appUserRepository.findByEmail(request.getEmail())).willReturn(Optional.of(appUser));
 
         // valid email
@@ -56,7 +61,7 @@ class AppUserServiceTest {
         // Then
         assertThatThrownBy(() -> appUserService.signUpUser(appUser))
                 .hasMessage("email already taken");
-         // Finally
+        // Finally
         then(appUserRepository.findByEmail(request.getEmail())).isNotNull();
 
     }
@@ -71,13 +76,25 @@ class AppUserServiceTest {
         AppUser appUser = new AppUser(firstName, lastName, email, password, AppUserRole.USER);
 
         // Reguest
-        RegistrationRequest request = new RegistrationRequest(appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getPassword());
-        given(appUserRepository.findByEmail(request.getEmail())).willReturn(Optional.empty());
+        RegistrationRequest request = new RegistrationRequest(appUser.getFirstName(),
+                appUser.getLastName(),
+                appUser.getEmail(),
+                appUser.getPassword());
+
+
+        // valid email
+        given(emailValidator.test(request.getEmail())).willReturn(true);
+
+        // When
+        String token = appUserService.signUpUser(appUser);
 
         // Then
-        then(appUserService.signUpUser(appUser)).isNotNull();
-        // Finally
+        then(token).isNotNull();
+        assertThat(token).isNotEmpty();
         then(appUserRepository.findByEmail(request.getEmail())).isNotNull();
+        assertThat(token).isNotNull();
+
+
 
     }
 
